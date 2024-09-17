@@ -17,7 +17,6 @@ $result = mysqli_query($conn, $query);
 
     <title>SB Admin 2 - Produk</title>
 
-    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -27,32 +26,16 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <?php include 'sidebar.php'; ?>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-
-                <!-- Topbar -->
                 <?php include 'navbar.php'; ?>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Produk</h1>
                         <a href="tambah_produk.php" class="btn btn-primary">Tambah Produk</a>
                     </div>
-
-                    <!-- Tabel Produk -->
                     <div class="container">
                         <table class="table table-bordered">
                             <thead class="thead-light">
@@ -85,25 +68,16 @@ $result = mysqli_query($conn, $query);
                         </table>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
             </div>
+            <br><br><br>    
         </div>
-        <!-- End of Content Wrapper -->
-
+        
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -119,7 +93,6 @@ $result = mysqli_query($conn, $query);
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Jika dikonfirmasi, redirect ke file PHP untuk hapus produk
                     window.location.href = "hapus_produk.php?id=" + id;
                 }
             })
