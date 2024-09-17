@@ -28,6 +28,14 @@ $jumlah_kategori_unik = $row_jumlah_kategori_unik['jumlah_kategori_unik'];
 $query_jumlah_kategori = "SELECT kategori, COUNT(*) AS jumlah FROM produk GROUP BY kategori";
 $result_jumlah_kategori = mysqli_query($conn, $query_jumlah_kategori);
 
+$kategori_labels = [];
+$kategori_data = [];
+
+while ($row = mysqli_fetch_assoc($result_jumlah_kategori)) {
+    $kategori_labels[] = $row['kategori'];
+    $kategori_data[] = $row['jumlah'];
+}
+
 $produk = [];
 $harga = [];
 $query = "SELECT * FROM produk";
@@ -41,6 +49,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,6 +59,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body id="page-top">
     <!-- Wrapper -->
     <div id="wrapper">
@@ -184,42 +194,51 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        var kategoriData = <?= json_encode(array_column(mysqli_fetch_all($result_jumlah_kategori, MYSQLI_ASSOC), 'jumlah')); ?>;
-        var kategoriLabels = <?= json_encode(array_column(mysqli_fetch_all($result_jumlah_kategori, MYSQLI_ASSOC), 'kategori')); ?>;
+        var kategoriData = <?= json_encode($kategori_data); ?>;
+        var kategoriLabels = <?= json_encode($kategori_labels); ?>;
 
         var ctxPie = document.getElementById('myPieChart');
         var myPieChart = new Chart(ctxPie, {
             type: 'doughnut',
             data: {
-                labels: kategoriLabels, 
+                labels: kategoriLabels,
                 datasets: [{
                     data: kategoriData,
                     backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e'],
                 }],
             },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    },
+                },
+            },
         });
     </script>
 
+
     <!-- Script for Area Chart -->
     <script>
+        var produkLabels = <?= json_encode($produk); ?>;
+        var hargaData = <?= json_encode($harga); ?>;
 
-    var produkLabels = <?= json_encode($produk); ?>; 
-    var hargaData = <?= json_encode($harga); ?>; 
-
-    var ctxArea = document.getElementById('myAreaChart');
-    var myLineChart = new Chart(ctxArea, {
-        type: 'line',
-        data: {
-            labels: produkLabels,
-            datasets: [{
-                label: "Harga",
-                data: hargaData,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgba(78, 115, 223, 1)",
-            }],
-        },
-    });
-</script>
+        var ctxArea = document.getElementById('myAreaChart');
+        var myLineChart = new Chart(ctxArea, {
+            type: 'line',
+            data: {
+                labels: produkLabels,
+                datasets: [{
+                    label: "Harga",
+                    data: hargaData,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                }],
+            },
+        });
+    </script>
 
 </body>
+
 </html>
